@@ -1,7 +1,7 @@
 #[derive(PartialEq, Clone, Eq, Debug)]
-struct ListNode{
+struct ListNode {
     pub val: i32,
-    pub next: Option<Box<ListNode>>
+    pub next: Option<Box<ListNode>>,
 }
 impl ListNode {
     fn new(val: i32) -> Self {
@@ -32,10 +32,12 @@ fn print_link(head: &Option<Box<ListNode>>) {
                 list_node.push(node.val);
                 current = node.next.as_ref()
             }
-            None => {break;}
+            None => {
+                break;
+            }
         }
     }
-    println!("{:?}",list_node);
+    println!("{:?}", list_node);
 }
 ///计算最大公约数
 fn gcd(mut a: i32, mut b: i32) -> i32 {
@@ -60,7 +62,6 @@ fn gcd(mut a: i32, mut b: i32) -> i32 {
 //             new_node.next = Some(next_node);
 
 //             current_node.next = Some(new_node);
-
 
 //             current = current_node.next.as_mut().unwrap().next.as_mut();
 //         }else {
@@ -88,7 +89,7 @@ fn insert_great_common_divisor(head: Option<Box<ListNode>>) -> Option<Box<ListNo
             new_node.next = Some(next_node);
             current_node.next = Some(new_node);
             current = current_node.next.as_mut().unwrap().next.as_mut();
-        }else {
+        } else {
             break;
         }
     }
@@ -101,7 +102,7 @@ mod tests {
 
     #[test]
     fn test_insert() {
-        let values= vec![10, 20, 30];
+        let values = vec![10, 20, 30];
         let list_node = create_link(values);
 
         let list_node_inserted = insert_great_common_divisor(list_node);
@@ -109,5 +110,3 @@ mod tests {
         print_link(&list_node_inserted);
     }
 }
-
-

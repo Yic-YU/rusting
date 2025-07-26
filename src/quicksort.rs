@@ -1,6 +1,5 @@
 use crate::vec_stack::Stack;
 
-
 fn partition<T: Ord>(arr: &mut [T], low: usize, high: usize) -> usize {
     let pivot_index = high;
     let mut i = low;
@@ -21,7 +20,7 @@ fn quicksort_stack<T: Ord>(arr: &mut [T]) {
 
     stack.push((0, arr.len() - 1));
 
-    while let Some((low, high)) = stack.pop(){
+    while let Some((low, high)) = stack.pop() {
         if low < high {
             let p = partition(arr, low, high);
 
@@ -35,7 +34,6 @@ fn quicksort_stack<T: Ord>(arr: &mut [T]) {
         }
     }
 }
-
 
 #[cfg(test)]
 mod tests {

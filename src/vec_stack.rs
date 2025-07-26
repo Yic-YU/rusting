@@ -1,25 +1,15 @@
 use std::{iter::Rev, sync::Arc};
 
-// const url: i32 = 10;
-
-
-
-fn add() {
-    const a:i32 = 33;
-    println!("{:p}",&a);
-}
-#[derive(Clone,Debug)]
-pub struct Stack<T>{
+#[derive(Clone, Debug)]
+pub struct Stack<T> {
     elem: Vec<T>,
 }
 impl<T> Stack<T> {
     ///创建一个空栈
     pub fn new() -> Self {
-        Stack{
-            elem: Vec::new(),     
-        }
-    }   
-    ///将元素压入栈顶 
+        Stack { elem: Vec::new() }
+    }
+    ///将元素压入栈顶
     pub fn push(&mut self, elem: T) {
         self.elem.push(elem);
     }
@@ -31,8 +21,8 @@ impl<T> Stack<T> {
     pub fn iter(&self) -> Rev<std::slice::Iter<'_, T>> {
         self.elem.iter().rev()
     }
-    ///栈顶到栈底的迭代 
-    pub fn into_iter(self) -> Rev<std::vec::IntoIter<T>>  {
+    ///栈顶到栈底的迭代
+    pub fn into_iter(self) -> Rev<std::vec::IntoIter<T>> {
         self.elem.into_iter().rev()
     }
     ///返回栈顶元素
@@ -53,12 +43,6 @@ macro_rules! stack {
     };
 }
 
-// fn mod_const() {
-//     let new_url = "aa";
-
-//     url = new_url
-// }
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -74,10 +58,5 @@ mod tests {
         // println!("{:?}",stack.iter());
         // let new_stack = stack.into_iter();
         // println!("{:?}",new_stack);
-        add();
-
-        
     }
 }
-
-

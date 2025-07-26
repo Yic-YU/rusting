@@ -1,28 +1,35 @@
-use std::{cell::RefCell, rc::{Rc, Weak}};
+use std::{
+    cell::RefCell,
+    rc::{Rc, Weak},
+};
 
-struct Node<T>{
+struct Node<T> {
     value: T,
     next: Option<Rc<RefCell<Node<T>>>>,
-    prev: Option<Weak<RefCell<Node<T>>>>
+    prev: Option<Weak<RefCell<Node<T>>>>,
 }
 impl<T> Node<T> {
-    fn new(value: T) -> Rc<RefCell<Node<T>>>{
-        Rc::new(RefCell::new(Node{
+    fn new(value: T) -> Rc<RefCell<Node<T>>> {
+        Rc::new(RefCell::new(Node {
             value,
             next: None,
-            prev: None
+            prev: None,
         }))
     }
 }
-struct DoublyLink<T>{
+struct DoublyLink<T> {
     head: Option<Rc<RefCell<Node<T>>>>,
     tail: Option<Rc<RefCell<Node<T>>>>,
-    len: usize
+    len: usize,
 }
-impl <T: Clone + std::fmt::Debug> DoublyLink<T> {
+impl<T: Clone + std::fmt::Debug> DoublyLink<T> {
     ///创建一个空链表
     fn new() -> Self {
-        DoublyLink { head: None, tail: None, len: 0 }
+        DoublyLink {
+            head: None,
+            tail: None,
+            len: 0,
+        }
     }
     /// 返回链表长度
     fn len(&self) -> usize {
@@ -33,7 +40,7 @@ impl <T: Clone + std::fmt::Debug> DoublyLink<T> {
         self.len == 0
     }
     ///增
-    fn push_back(&mut self, value: T){
+    fn push_back(&mut self, value: T) {
         let new_node = Node::new(value);
 
         match self.tail.take() {
@@ -43,17 +50,16 @@ impl <T: Clone + std::fmt::Debug> DoublyLink<T> {
                 self.tail = Some(new_node);
             }
 
-            None =>{
+            None => {
                 self.head = Some(new_node.clone());
                 self.tail = Some(new_node)
             }
         }
         self.len += 1;
     }
-    
+
     fn get(&self, index: usize) -> Option<T> {
-        self.get_node(index)
-            .map(|node| node.borrow().value.clone())
+        self.get_node(index).map(|node| node.borrow().value.clone())
     }
     ///查（index）
     fn get_node(&self, index: usize) -> Option<Rc<RefCell<Node<T>>>> {
@@ -66,11 +72,11 @@ impl <T: Clone + std::fmt::Debug> DoublyLink<T> {
             let next = current_node.as_ref()?.borrow().next.clone();
             current_node = next;
         }
-        
+
         current_node
     }
     ///删
-    fn remove(&mut self, index: usize) -> Option<T>{
+    fn remove(&mut self, index: usize) -> Option<T> {
         let remove_node = self.get_node(index).unwrap();
         let prev_node_opt = remove_node.borrow().prev.as_ref().and_then(|p| p.upgrade());
         let next_node_opt = remove_node.borrow().next.clone();
@@ -117,8 +123,6 @@ impl <T: Clone + std::fmt::Debug> DoublyLink<T> {
     }
 }
 
-
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -140,12 +144,9 @@ mod tests {
         println!("index3:元素为{:?}", list.get(3)); // Some(40)
         println!("index5:元素为{:?}", list.get(5)); // None (out of bounds)
 
-
         println!("删除index为1的元素");
         let removed_val = list.remove(1);
         println!("删除的值为: {:?}", removed_val); // Some(20)
         list.print_list(); // List (len=3): [10 <-> 30 <-> 40]
-
     }
 }
-
