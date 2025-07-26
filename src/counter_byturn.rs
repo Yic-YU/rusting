@@ -67,6 +67,9 @@ mod tests {
         handle1.await.unwrap();
         handle2.await.unwrap();
     }
+
+
+
     #[tokio::test]
     async fn test_counter_with_notify() {
         struct Counter {
@@ -78,7 +81,7 @@ mod tests {
             Mutex::new(Counter { value: 0, flag: false }),
             Notify::new(),
         ));
-
+        // 使用 Arc 和 Notify 来共享状态和通知机制，共享所有权，是同一个notify对象。
         let state1 = state.clone();
         let handle1 = tokio::spawn(async move {
             loop {
